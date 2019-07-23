@@ -45,6 +45,11 @@ class EmpresaController extends Controller
             'website' => 'nullable|url',
         ]);
 
+        if ($request->has('logo')) {
+             $filename = $request->file('logo')->store('public');
+             $data['logo'] = str_replace('public', '/storage', $filename);
+        }
+
         Empresa::create($data);
 
         return redirect()->route('empresas.index')

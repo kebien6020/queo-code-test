@@ -6,7 +6,7 @@
 
 @include('partials.alerts')
 
-<form action="{{route('empresas.store')}}" method="post">
+<form action="{{route('empresas.store')}}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="form-group">
         <label for="name">Nombre</label>
