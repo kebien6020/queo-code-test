@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Empleado;
+use App\Empresa;
 use Illuminate\Http\Request;
 
 class EmpleadoController extends Controller
@@ -27,7 +28,12 @@ class EmpleadoController extends Controller
      */
     public function create()
     {
-        //
+        $empresas = Empresa::all();
+
+        return view('empleados.create', [
+            'edit' => false,
+            'empresas' => $empresas,
+        ]);
     }
 
     /**
@@ -38,7 +44,18 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'nullable|email',
+            'phone'      => 'nullable',
+            'company_id' => 'required',
+        ]);
+
+        $empleado = Empleado::create($data);
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'Empleado creado');
     }
 
     /**
