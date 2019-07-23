@@ -27,7 +27,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        return view('empresas.create');
+        return view('empresas.create', ['edit' => false]);
     }
 
     /**
@@ -50,9 +50,9 @@ class EmpresaController extends Controller
              $data['logo'] = str_replace('public', '/storage', $filename);
         }
 
-        Empresa::create($data);
+        $empresa = Empresa::create($data);
 
-        return redirect()->route('empresas.index')
+        return redirect()->route('empresas.show', $empresa->id)
             ->with('success', 'Empresa creada');
     }
 
@@ -77,7 +77,10 @@ class EmpresaController extends Controller
      */
     public function edit(Empresa $empresa)
     {
-        //
+        return view('empresas.create', [
+            'edit' => true,
+            'empresa' => $empresa,
+        ]);
     }
 
     /**
@@ -89,7 +92,24 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, Empresa $empresa)
     {
-        //
+        $data = $request->validate([
+            'name'    => 'required|max:255',
+            'email'   => 'nullable|email',
+            'logo'    => 'nullable|image|dimensions:min_width=100,min_height=100',
+            'website' => 'nullable|url',
+        ]);
+
+        if ($request->has('logo')) {
+             $filename = $request->file('logo')->store('public');
+             $data['logo'] = str_replace('public', '/storage', $filename);
+        } else {
+            $data['logo'] = $empresa->logo;
+        }
+
+        $empresa->update($data);
+
+        return redirect()->route('empresas.show', $empresa->id)
+            ->with('success', 'Empresa guardada');
     }
 
     /**

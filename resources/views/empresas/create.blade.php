@@ -1,20 +1,27 @@
 @extends('adminlte::page')
 
-@section('title', 'Crear Empresa')
+@section('title', ($edit ? 'Editar' : 'Crear') .' Empresa')
 
 @section('content')
 
 @include('partials.alerts')
 
-<form action="{{route('empresas.store')}}" method="post" enctype="multipart/form-data">
+<form action="{{$edit ? route('empresas.update', $empresa->id) : route('empresas.store')}}" method="post" enctype="multipart/form-data">
     @csrf
+    @if ($edit)
+        @method('put')
+    @endif
     <div class="form-group">
         <label for="name">Nombre</label>
-        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre">
+        <input type="text" class="form-control" id="name" name="name" placeholder="Nombre"
+            @if($edit) value="{{$empresa->name}}" @endif
+        >
     </div>
     <div class="form-group">
         <label for="email">Correo electrónico</label>
-        <input type="email" class="form-control" id="email" name="email" placeholder="Correo">
+        <input type="email" class="form-control" id="email" name="email" placeholder="Correo"
+            @if($edit) value="{{$empresa->email}}" @endif
+        >
     </div>
     <div class="form-group">
         <label for="logo">Logo</label>
@@ -23,10 +30,18 @@
     </div>
     <div class="form-group">
         <label for="website">Sitio web</label>
-        <input type="text" class="form-control" id="website" name="website" placeholder="Sitio web">
+        <input type="text" class="form-control" id="website" name="website" placeholder="Sitio web"
+            @if($edit) value="{{$empresa->website}}" @endif
+        >
     </div>
 
-    <button type="submit" class="btn btn-default">Crear</button>
+    <button type="submit" class="btn btn-default">
+        @if ($edit)
+            Guardar
+        @else
+            Crear
+        @endif
+    </button>
 </form>
 
 @endsection

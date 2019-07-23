@@ -35,7 +35,10 @@
                         <a href="{{$empresa->website}}">{{$empresa->website}}</a>
                     @endif
                 </td>
-                <td><a class="btn btn-primary" href="{{route('empresas.show', $empresa->id)}}">Lista Empleados</a></td>
+                <td>
+                    <a class="btn btn-primary" href="{{route('empresas.show', $empresa->id)}}">Lista Empleados</a>
+                    <a class="btn btn-primary" href="{{route('empresas.edit', $empresa->id)}}">Editar</a>
+                </td>
             </tr>
         @endforeach
     </tbody>
