@@ -11,13 +11,15 @@
 |
 */
 
-Route::get('/', function () {
-    return redirect('home');
-});
 
 Auth::routes([ 'register' => false ]);
 
+Route::get('/', function () { return redirect('home'); });
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('empresas', 'EmpresaController');
-Route::resource('empleados', 'EmpleadoController');
+Route::middleware(['auth'])->group(function() {
+
+    Route::resource('empresas', 'EmpresaController');
+    Route::resource('empleados', 'EmpleadoController');
+
+});
