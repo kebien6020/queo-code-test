@@ -120,6 +120,9 @@ class EmpresaController extends Controller
      */
     public function destroy(Empresa $empresa)
     {
-        //
+        $empresa->delete();
+
+        return redirect()->route('empresas.index')
+            ->with('success', 'Empresa eliminada');
     }
 }

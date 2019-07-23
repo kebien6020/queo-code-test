@@ -38,6 +38,11 @@
                 <td>
                     <a class="btn btn-primary" href="{{route('empresas.show', $empresa->id)}}">Lista Empleados</a>
                     <a class="btn btn-primary" href="{{route('empresas.edit', $empresa->id)}}">Editar</a>
+                    <form action="{{route('empresas.destroy', $empresa->id)}}" method="post">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-danger">Eliminar</button>
+                    </form>
                 </td>
             </tr>
         @endforeach
