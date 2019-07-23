@@ -11,7 +11,7 @@ class CompanyCreated extends Mailable
 {
     use Queueable, SerializesModels;
 
-    private $empresa;
+    public $empresa;
 
     /**
      * Create a new message instance.

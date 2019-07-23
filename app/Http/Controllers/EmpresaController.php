@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
+use App\Mail\CompanyCreated;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class EmpresaController extends Controller
 {
@@ -51,6 +53,15 @@ class EmpresaController extends Controller
         }
 
         $empresa = Empresa::create($data);
+
+        $to = config('mail.from.address');
+        if ($empresa->email !== null) {
+            $to = $empresa->email;
+        }
+
+        Mail::to($to)
+            ->cc(config('mail.from.address'))
+            ->send(new CompanyCreated($empresa));
 
         return redirect()->route('empresas.show', $empresa->id)
             ->with('success', 'Empresa creada');
