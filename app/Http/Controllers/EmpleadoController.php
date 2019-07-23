@@ -78,7 +78,13 @@ class EmpleadoController extends Controller
      */
     public function edit(Empleado $empleado)
     {
-        //
+        $empresas = Empresa::all();
+
+        return view('empleados.create', [
+            'edit' => true,
+            'empleado' => $empleado,
+            'empresas' => $empresas,
+        ]);
     }
 
     /**
@@ -90,7 +96,18 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, Empleado $empleado)
     {
-        //
+        $data = $request->validate([
+            'first_name' => 'required',
+            'last_name'  => 'required',
+            'email'      => 'nullable|email',
+            'phone'      => 'nullable',
+            'company_id' => 'required',
+        ]);
+
+        $empleado->update($data);
+
+        return redirect()->route('empleados.index')
+            ->with('success', 'Empleado guardado');
     }
 
     /**
