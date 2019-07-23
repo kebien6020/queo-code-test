@@ -27,7 +27,7 @@ class EmpresaController extends Controller
      */
     public function create()
     {
-        //
+        return view('empresas.create');
     }
 
     /**
@@ -38,7 +38,17 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'name'    => 'required|max:255',
+            'email'   => 'nullable|email',
+            'logo'    => 'nullable|image|dimensions:min_width=100,min_height=100',
+            'website' => 'nullable|url',
+        ]);
+
+        Empresa::create($data);
+
+        return redirect()->route('empresas.index')
+            ->with('success', 'Empresa creada');
     }
 
     /**
