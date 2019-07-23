@@ -66,7 +66,8 @@ class EmpleadoController extends Controller
      */
     public function show(Empleado $empleado)
     {
-        //
+        // No extra detail to show
+        return redirect()->route('empleados.index');
     }
 
     /**
