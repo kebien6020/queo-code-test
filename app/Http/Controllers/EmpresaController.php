@@ -14,7 +14,10 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        //
+        $empresas = Empresa::paginate(10);
+        return view('empresas.list', [
+            'empresas' => $empresas,
+        ]);
     }
 
     /**
