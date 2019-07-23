@@ -59,7 +59,9 @@ class EmpresaController extends Controller
      */
     public function show(Empresa $empresa)
     {
-        //
+        return view('empresas.show', [
+            'empresa' => $empresa,
+        ]);
     }
 
     /**

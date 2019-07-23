@@ -14,4 +14,9 @@ class Empleado extends Model
         return $this->belongsTo(Empresa::class, 'company_id');
     }
 
+    public function name()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
+
 }
