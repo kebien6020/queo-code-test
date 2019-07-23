@@ -9,4 +9,9 @@ class Empresa extends Model
 
     protected $fillable = ['name', 'email', 'logo', 'website'];
 
+    public function empleados()
+    {
+        return $this->hasMany(Empleado::class, 'company_id');
+    }
+
 }

@@ -9,4 +9,9 @@ class Empleado extends Model
 
     protected $fillable = ['first_name', 'last_name', 'email', 'phone'];
 
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'company_id');
+    }
+
 }
